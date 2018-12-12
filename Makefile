@@ -25,9 +25,17 @@ migrate:
 	@echo $(TAG)Migrating Database$(END)
 	$(call django-command, migrate)
 
+showmigrations:
+	@echo $(TAG)Creating Migrations$(END)
+	$(call django-command, showmigrations)
+
 makemigrations:
 	@echo $(TAG)Creating Migrations$(END)
 	$(call django-command, makemigrations)
+
+datamigration:
+	@echo $(TAG)Creating Migrations$(END)
+	$(call django-command, makemigrations, --empty, sample_app)
 
 createsuperuser:
 	@echo $(TAG)Create Superuser$(END)
