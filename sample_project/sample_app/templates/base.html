@@ -16,6 +16,10 @@
       a {
         color: black;
       }
+
+      .nav-item {
+        margin-right: 5px;
+      }
     </style>
   </head>
   <body class="container">
@@ -28,6 +32,7 @@
         <li class="nav-item"><a class="btn btn-outline-light" href="/accounts/logout">Log out</a></li>
       {% else %}
         <li class="nav-item"><a class="btn btn-outline-light" href="/accounts/login">Log in</a></li>
+        <li class="nav-item"><a class="btn btn-outline-light" href="/signup">Sign up</a></li>
       {% endif %}
       </ul>
     </nav>

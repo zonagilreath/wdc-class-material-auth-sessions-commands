@@ -2,11 +2,13 @@ from datetime import datetime
 
 from django.urls import reverse
 from django.http import HttpResponseNotFound
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import BookForm
 from .models import Author, Book
+from .forms import BookForm, SignUpForm
 
 
 def is_staff(user):
@@ -138,3 +140,26 @@ def remove_from_favorites(request):
         request.session['favorite_books'].remove(request.POST.get('book_id'))
         request.session.save()
     return redirect('index')
+
+
+def signup(request):
+    if request.method == 'GET':
+        signup_form = SignUpForm()
+        return render(
+            request,
+            'signup.html',
+            context={'signup_form': signup_form}
+        )
+    elif request.method == 'POST':
+        signup_form = SignUpForm(request.POST)
+        if signup_form.is_valid():
+            user = User.objects.create(username=request.POST['username'])
+            user.set_password(request.POST['password'])
+            user.save()
+            login(request, user)
+            return redirect('index')
+        return render(
+            request,
+            'signup.html',
+            context={'signup_form': signup_form}
+        )
