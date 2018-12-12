@@ -2,11 +2,15 @@ from datetime import datetime
 
 from django.urls import reverse
 from django.http import HttpResponseNotFound
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import BookForm
 from .models import Author, Book
+
+
+def is_staff(user):
+    return user.is_staff
 
 
 def index(request):
@@ -28,6 +32,7 @@ def index(request):
 
 
 @login_required
+@user_passes_test(is_staff)
 def create_book(request):
     if request.method == 'GET':
         book_form = BookForm()
@@ -49,6 +54,7 @@ def create_book(request):
 
 
 @login_required
+@user_passes_test(is_staff)
 def edit_book(request, book_id=None):
     book = get_object_or_404(Book, id=book_id)
     if request.method == 'GET':
@@ -77,6 +83,7 @@ def edit_book(request, book_id=None):
 
 
 @login_required
+@user_passes_test(is_staff)
 def delete_book(request):
     book_id = request.POST.get('book_id')
     book = get_object_or_404(Book, id=book_id)
