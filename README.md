@@ -68,7 +68,7 @@ def backfill_popularity(apps, schema_editor):
 ###### Step 6: Check your migrations using the shell!
 
 ```bash
-$ make shell
+$ make showmigrations
 ```
 
 ###### Step 7: Apply your migration!
