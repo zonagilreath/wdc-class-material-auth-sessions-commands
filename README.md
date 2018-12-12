@@ -56,7 +56,7 @@ def backfill_popularity(apps, schema_editor):
     Book = apps.get_model('sample_app', 'Book')
 
     all_titles = Book.objects.all().values_list('title', flat=True)
-    max_title_length = len(max(all_titles))
+    max_title_length = max([len(title) for title in all_titles])
 
     for book in Book.objects.all():
         book.popularity = len(book.title) / max_title_length * 5
