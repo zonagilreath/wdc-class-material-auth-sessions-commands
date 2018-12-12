@@ -10,10 +10,10 @@ from .models import Author, Book
 def index(request):
     sort_method = request.GET.get('sort', 'asc')
     books = Book.objects.all()
-    if sort_method == 'asc':
-        books = books.order_by('popularity')
-    elif sort_method == 'desc':
-        books = books.order_by('-popularity')
+    # if sort_method == 'asc':
+    #     books = books.order_by('popularity')
+    # elif sort_method == 'desc':
+    #     books = books.order_by('-popularity')
 
     if 'q' in request.GET:
         q = request.GET['q']
