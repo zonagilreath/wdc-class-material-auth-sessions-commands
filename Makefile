@@ -35,7 +35,7 @@ makemigrations:
 
 datamigration:
 	@echo $(TAG)Creating Migrations$(END)
-	$(call django-command, makemigrations, --empty, sample_app)
+	$(call django-command, makemigrations, --empty sample_app)
 
 createsuperuser:
 	@echo $(TAG)Create Superuser$(END)
