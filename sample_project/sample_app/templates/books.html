@@ -21,7 +21,9 @@
         <th>Book Title</th>
         <th>Author</th>
         <th><a href="/?sort={% if sort_method == 'asc' %}desc{% else %}asc{% endif %}">Popularity({% if sort_method == 'asc' %} v {% else %} ^ {% endif %})</a></th>
-        <th>Actions</th>
+        {% if request.user.is_authenticated %}
+          <th>Actions</th>
+        {% endif %}
       </tr>
     </thead>
     <tbody>
@@ -31,20 +33,25 @@
           <td class="align-middle">{{ book.title}}</td>
           <td class="align-middle"><a href="{% url 'author_by_id' book.author.id %}">{{ book.author.name}}</a></td>
           <td class="align-middle">{{ book.popularity}}</td>
-          <td class="align-middle">
-            <div class="row justify-content-md-center">
-              <a href="/edit_book/{{book.id}}" style="margin-right: 5px;"><button type="button" class="btn btn-outline-warning btn-xs">Edit</button></a>
-              <form class="" action="/delete_book" method="post">
-                {% csrf_token %}
-                <input type="hidden" name='book_id' value='{{book.id}}'>
-                <input type="submit" value='Delete' class="btn btn-outline-danger btn-xs">
-              </form>
-            </div>
-          </td>
+          {% if request.user.is_authenticated %}
+            <td class="align-middle">
+              <div class="row justify-content-md-center">
+                <a href="/edit_book/{{book.id}}" style="margin-right: 5px;"><button type="button" class="btn btn-outline-warning btn-xs">Edit</button></a>
+                <form class="" action="/delete_book" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name='book_id' value='{{book.id}}'>
+                  <input type="submit" value='Delete' class="btn btn-outline-danger btn-xs">
+                </form>
+              </div>
+            </td>
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>
   </table>
   <p class="lead"><a href="{% url 'authors' %}">Prefer to browse by author?</a></p>
-  <a href="/create_book/"><button type="button" class="btn btn-info">Create Book</button></a>
+
+  {% if request.user.is_authenticated %}
+    <a href="/create_book/"><button type="button" class="btn btn-info">Create Book</button></a>
+  {% endif %}
 {% endblock %}
