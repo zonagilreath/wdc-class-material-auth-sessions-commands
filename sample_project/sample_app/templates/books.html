@@ -20,7 +20,7 @@
         <th>#</th>
         <th>Book Title</th>
         <th>Author</th>
-        <th><a href="/?sort={% if sort_method == 'asc' %}desc{% else %}asc{% endif %}">Popularity({% if sort_method == 'asc' %} v {% else %} ^ {% endif %})</a></th>
+        <th><a href="/?sort={% if sort_method == 'asc' %}desc{% else %}asc{% endif %}">Popularity ({% if sort_method == 'asc' %}↓{% else %}↑{% endif %})</a></th>
         {% if request.user.is_authenticated and request.user.is_staff %}
           <th>Actions</th>
         {% endif %}
