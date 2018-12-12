@@ -29,7 +29,7 @@ class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     isbn = models.CharField(max_length=255)
-    # popularity = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
+    popularity = models.DecimalField(max_digits=4, decimal_places=2)
 
     def __str__(self):
         return "{}({})".format(self.title, self.author)
