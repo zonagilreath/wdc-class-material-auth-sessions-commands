@@ -13,4 +13,7 @@ urlpatterns = [
     path('delete_book', views.delete_book, name='delete_book'),
     path('edit_book/<int:book_id>/', views.edit_book, name='edit_book'),
     path('', views.index, name='index'),
+    path('favorites/', views.favorites, name='favorites'),
+    path('add-to-favorites/', views.add_to_favorites, name='add_to_favorites'),
+    path('remove-from-favorites/', views.remove_from_favorites, name='remove_from_favorites'),
 ]

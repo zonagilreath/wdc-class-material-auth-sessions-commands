@@ -24,6 +24,11 @@ def index(request):
     if 'q' in request.GET:
         q = request.GET['q']
         books = books.filter(title__icontains=q)
+
+    # initialize list of favorite books for current session
+    request.session.setdefault('favorite_books', [])
+    request.session.save()
+
     return render(request, 'books.html', {
         'books': books,
         'authors': Author.objects.all(),
@@ -107,3 +112,29 @@ def author(request, author_id):
     return render(request, 'author.html', {
         'author': author
     })
+
+
+def favorites(request):
+    books_ids = request.session.get('favorite_books', [])
+    favorite_books = Book.objects.filter(id__in=books_ids)
+    return render(
+        request,
+        'favorites.html',
+        context={
+            'favorite_books': favorite_books,
+        }
+    )
+
+
+def add_to_favorites(request):
+    request.session.setdefault('favorite_books', [])
+    request.session['favorite_books'].append(request.POST.get('book_id'))
+    request.session.save()
+    return redirect('index')
+
+
+def remove_from_favorites(request):
+    if request.session.get('favorite_books'):
+        request.session['favorite_books'].remove(request.POST.get('book_id'))
+        request.session.save()
+    return redirect('index')
